@@ -9,6 +9,10 @@ module.exports = {
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
+        references: {
+          // model: '*****',
+          key: 'id',
+        },
       },
       category_id: {
         allowNull: false,
@@ -16,6 +20,10 @@ module.exports = {
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
+        references: {
+          // model: '*****',
+          key: 'id',
+        },
       }
     });
   },

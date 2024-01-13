@@ -19,11 +19,6 @@ module.exports = {
         unique: true,
         type: Sequelize.STRING,
       },
-      user_id: {
-        allowNull: false,
-        primaryKey: true,
-        type: Sequelize.INTEGER,
-      },
       published: {
         allowNull: false,
         type: Sequelize.DATE,
@@ -31,6 +26,14 @@ module.exports = {
       updated: {
         allowNull: false,
         type: Sequelize.DATE,
+      },
+      user_id: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'User',
+          key: 'id',
+        }
       }
     });
   },
