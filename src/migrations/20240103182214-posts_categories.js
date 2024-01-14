@@ -3,32 +3,29 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
-    return queryInterface.createTable('posts_categories', {
+    return await queryInterface.createTable('posts_categories', {
       post_id: {
-        allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
         type: Sequelize.INTEGER,
         references: {
-          // model: '*****',
+          model: 'BlogPost',
           key: 'id',
         },
+        onDelete: 'CASCADE',
+        primaryKey:true
       },
       category_id: {
-        allowNull: false,
-        type: Sequelize.STRING,
-        autoIncrement: true,
-        primaryKey: true,
         type: Sequelize.INTEGER,
         references: {
-          // model: '*****',
+          model: 'Category',
           key: 'id',
         },
+        onDelete: 'CASCADE',
+        primaryKey:true
       }
     });
   },
 
-  async down (queryInterface, Sequelize) {
-    return queryInterface.dropTable('posts_categories');
+  async down (queryInterface, _Sequelize) {
+    return await queryInterface.dropTable('posts_categories');
   }
 };
