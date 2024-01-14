@@ -1,4 +1,4 @@
-const CategoryModel = (sequelize, DataTypes) => {
+const Category = (sequelize, DataTypes) => {
     const model = sequelize.define('Category', {
       id: {
           allowNull: false,
@@ -18,4 +18,4 @@ const CategoryModel = (sequelize, DataTypes) => {
     return model;
   };
   
-  module.exports = CategoryModel;
+  module.exports = Category;
