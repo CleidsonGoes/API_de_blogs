@@ -1,5 +1,5 @@
 const User = (sequelize, DataTypes) => {
-  const model = sequelize.define('User', {
+  const User = sequelize.define('User', {
     id: {
         allowNull: false,
         autoIncrement: true,
@@ -32,7 +32,7 @@ const User = (sequelize, DataTypes) => {
     User.hasMany(models.BlogPost,
       { foreignKey: 'userId', as: 'BlogPost' });
   };
-  return model;
+  return User;
 };
 
 module.exports = User;
