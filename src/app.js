@@ -1,5 +1,5 @@
 const express = require('express');
-// const { User } = require('./models/User');
+// const { User } = require('./models');
 
 // ...
 
@@ -16,7 +16,7 @@ app.get('/', (_request, response) => {
 //   const { email, password } = req.body;
 //   if (email && password) {
 //     return res.status(200).json({
-//       "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjo1LCJkaXNwbGF5TmFtZSI6InVzdWFyaW8gZGUgdGVzdGUiLCJlbWFpbCI6InRlc3RlQGVtYWlsLmNvbSIsImltYWdlIjoibnVsbCJ9LCJpYXQiOjE2MjAyNDQxODcsImV4cCI6MTYyMDY3NjE4N30.Roc4byj6mYakYqd9LTCozU1hd9k_Vw5IWKGL4hcCVG8"
+//       token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjo1LCJkaXNwbGF5TmFtZSI6InVzdWFyaW8gZGUgdGVzdGUiLCJlbWFpbCI6InRlc3RlQGVtYWlsLmNvbSIsImltYWdlIjoibnVsbCJ9LCJpYXQiOjE2MjAyNDQxODcsImV4cCI6MTYyMDY3NjE4N30.Roc4byj6mYakYqd9LTCozU1hd9k_Vw5IWKGL4hcCVG8',
 //     });
 //   }
 // });
@@ -32,18 +32,25 @@ app.get('/', (_request, response) => {
 //   });
 //   return res.status(201).json(created);
 // });
-
+  
 // requisito 05
 // app.get('/user', async (_req, res) => {
 //   // const user = await User.findAll();
 //   return res.status(200).json(user);
 // });
-
+    
 // requisito 06
 // app.get('/user/:id', (req, res) => res.status(200).json({ df: 'informar a saída aqui' }));
-
+    
 // requisito 16
-// app.
+// app.delete('/post/:id', async (req, res) => {
+//   const { id } = req.params();
+
+//   await User.destroy({ where: { id } });
+
+//   // deletado com sucesso
+//   return res.status(204).json();
+// });
 
 // É importante exportar a constante `app`,
 // para que possa ser utilizada pelo arquivo `src/server.js`

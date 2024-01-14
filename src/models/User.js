@@ -24,8 +24,14 @@ const UserModel = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
     }
   }, {
-    timestamps: false
+    timestamps: false,
+    underscored: true,
   });
+
+  User.associate = (models) => {
+    User.hasOne(models.Address,
+      { foreignKey: 'userId', as: '*****' });
+  };
   return model;
 };
 
