@@ -1,10 +1,10 @@
 const { Router } = require('express');
 const authMiddleware = require('../middlewares/auth.middlewares');
-const { login, getAll } = require('../controllers/login.controllers');
+const { userController } = require('../controllers/user.controllers');
 
 const loginRouter = Router();
 
 // requisito 03
-loginRouter.post('/login', authMiddleware, login, getAll);
+loginRouter.post('/login', authMiddleware, userController);
 
 module.exports = loginRouter;
