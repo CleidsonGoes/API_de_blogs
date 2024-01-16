@@ -11,16 +11,6 @@ app.get('/', (_request, response) => {
   response.send();
 });
 
-// requisito 03
-// app.post('/login', async (req, res) => {
-//   const { email, password } = req.body;
-//   if (email && password) {
-//     return res.status(200).json({
-//       token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjo1LCJkaXNwbGF5TmFtZSI6InVzdWFyaW8gZGUgdGVzdGUiLCJlbWFpbCI6InRlc3RlQGVtYWlsLmNvbSIsImltYWdlIjoibnVsbCJ9LCJpYXQiOjE2MjAyNDQxODcsImV4cCI6MTYyMDY3NjE4N30.Roc4byj6mYakYqd9LTCozU1hd9k_Vw5IWKGL4hcCVG8',
-//     });
-//   }
-// });
-
 // requisito 04
 // app.post('/user', async (req, res) => {
 //   const { displayName, email, password, image } = req.body;
