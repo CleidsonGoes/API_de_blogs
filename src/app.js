@@ -1,5 +1,10 @@
 const express = require('express');
 // const { User } = require('./models');
+// const { Router } = require('express');
+// const authMiddleware = require('../middlewares/auth.middlewares');
+const getUserController = require('./controllers/login.controller');
+
+// const loginRouter = Router();
 
 // ...
 
@@ -10,6 +15,10 @@ app.use(express.json());
 app.get('/', (_request, response) => {
   response.send();
 });
+
+app.post('/login', getUserController);
+
+// module.exports = loginRouter;
 
 // requisito 04
 // app.post('/user', async (req, res) => {

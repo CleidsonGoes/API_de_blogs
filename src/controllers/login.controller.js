@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 // const { User } = require('../models');
-const { getUsersService } = require('../services/user.services');
+const { getUsersService } = require('../services/login.service');
 
 const secret = process.env.JWT_SECRET || 'seusecretdetoken';
 
@@ -12,13 +12,13 @@ const getUserController = async (req, res) => {
     const { email, password } = req.body;
 
     if (!isBodyValid(email, password)) {
-      return res.status(401).json({ message: 'Some required fields are missing' });
+      return res.status(400).json({ message: 'Some required fields are missing' });
     }
 
-    const user = await getUsersService();
+    const user = await getUsersService(email, password);
 
     if (!user || user.password !== password) {
-      return res.status(401).json({ message: 'Invalid fields' });
+      return res.status(400).json({ message: 'Invalid fields' });
     }
 
     const jwtConfig = {

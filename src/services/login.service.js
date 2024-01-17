@@ -1,15 +1,12 @@
-const { User } = require('../models/User');
+const { User } = require('../models');
 
-const getUsersService = async (email, password) => {
-  User.findAll({
-    where: {
-      email,
-      password,
-    },
-  });
-  // SELECT * FROM post WHERE authorId = 2;  return users;
-};
-console.log(getUsersService);
+const getUsersService = async (email, password) => User.findOne({
+  where: {
+    email,
+    password,
+  },
+});
+// getUsersService('lewishamilton@gmail.com', '123456').then((data) => console.log(data.dataValues));
 
 // const getById = async (id) => {
 //   const book = await Book.findByPk(id);
