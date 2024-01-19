@@ -2,21 +2,20 @@ const express = require('express');
 // const { User } = require('./models');
 // const { Router } = require('express');
 // const authMiddleware = require('../middlewares/auth.middlewares');
-const getUserController = require('./controllers/login.controller');
-
-// const loginRouter = Router();
+const loginRouter = require('./routes/login.route');
+const userRouter = require('./routes/user.route');
 
 // ...
 
 const app = express();
 app.use(express.json());
+app.use(loginRouter);
+app.use(userRouter);
 
 // não remova ou mova esse endpoint
 app.get('/', (_request, response) => {
   response.send();
 });
-
-app.post('/login', getUserController);
 
 // module.exports = loginRouter;
 

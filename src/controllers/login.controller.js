@@ -34,4 +34,4 @@ const getUserController = async (req, res) => {
   }
 };
 
-module.exports = getUserController;
+module.exports = { getUserController };
