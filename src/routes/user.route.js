@@ -8,6 +8,7 @@ const userRouter = Router();
 
 // // requisito 03
 userRouter.get('/user', /* validateJWT , */ userController.getAllUserController);
+userRouter.get('/user/:id', userController.getIdUserController);
 userRouter.post('/user', userController.createUserController);
 
 module.exports = userRouter;

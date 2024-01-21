@@ -42,16 +42,19 @@ async function getAllUserService() {
   console.log('log do map do service', users);
   return users;
 }
-// REQUISITO 05 para validateJWT.js
+// REQUISITO 05 para validateJWT.js e para REQUISITO 06
 async function getIdUserService(id) {
   const userId = await User.findByPk(id);
   if (userId === null) {
-    console.log('Not found!');
-  } else {
-    console.log(userId instanceof User); // true
-    console.log(userId);
-    return userId;
-  }
+    return { status: 404, message: { message: 'User does not exist' } };
+  } 
+  const { dataValues } = userId;
+  return { status: 200,
+    message: {
+      id: dataValues.id,
+      displayName: dataValues.displayName,
+      email: dataValues.email,
+      image: dataValues.image } };
 }
 
 module.exports = {

@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 
 const secret = process.env.JWT_SECRET || 'seusecretdetoken';
 
-const { getAllUserService } = require('../services/user.service');
+const { getAllUserService, getIdUserService } = require('../services/user.service');
 
 function validationFields(displayName, email, password) {
   const regexEmail = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
@@ -42,6 +42,13 @@ async function getAllUserController(_req, res) {
   return res.status(200).json(allUser);
 }
 
+// REQUISITO 06
+async function getIdUserController(req, res) {
+  const { id } = req.params;
+  const userId = await getIdUserService(id);
+  return res.status(userId.status).json(userId.message);
+}
+
 module.exports = {
-  createUserController, getAllUserController,
+  createUserController, getAllUserController, getIdUserController,
 };
