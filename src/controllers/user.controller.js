@@ -1,44 +1,47 @@
 const jwt = require('jsonwebtoken');
-const userService = require('../services/user.service');
-const { User } = require('../models');
 
-function validateField(res, displayName, email, password) {
+const secret = process.env.JWT_SECRET || 'seusecretdetoken';
+
+const { getAllUserService } = require('../services/user.service');
+
+function validationFields(displayName, email, password) {
   const regexEmail = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-  
   if (displayName.length < 8) {
-    return res.status(400).json({
-      message: '"displayName" length must be at least 8 characters long',
-    });
-  }
-  if (!regexEmail.test(email)) {
-    return res.status(400).json({ message: '"email" must be a valid email' });
+    return { status: 400,
+      message: { message: '"displayName" length must be at least 8 characters long' } }; 
   }
   if (password.length < 6) {
-    return res.status(400).json({
-      message: '"password" length must be at least 6 characters long',
-    });
+    return { status: 400,
+      message: { message: '"password" length must be at least 6 characters long' } };
   }
+  if (!regexEmail.test(email)) {
+    return { status: 400, message: { message: '"email" must be a valid email' } };
+  }
+  return { status: 201, message: { message: 'tudo certo' } };
 }
 
 async function createUserController(req, res) {
-  const secret = process.env.JWT_SECRET || 'seusecretdetoken';
-  const jwtConfig = { expiresIn: '7d', algorithm: 'HS256' };
-
   const { displayName, email, password } = req.body;
-  validateField(res, displayName, email, password);
-  
-  const returnUserService = await userService.userCreateService(email);
-  console.log('bem aquiiiiiii', returnUserService);
 
-  if (returnUserService && returnUserService === email) {
-    return res.status(409).json({ message: 'User already registered' });
-  }
-  await User.create(req.body);
-  const tokenCreated = jwt.sign({ data: { userId: returnUserService } }, secret, jwtConfig);
-  
-  return res.status(201).json({ token: tokenCreated });
+  const validation = await validationFields(displayName, email, password);
+  return res.status(validation.status).json(validation.message);
+  // const returnUserService = await userCreateService(email);
+}
+
+// REQUISITO 05
+async function getAllUserController(_req, res) {
+  const jwtConfig = {
+    expiresIn: '7d',
+    algorithm: 'HS256',
+  };
+
+  const allUser = await getAllUserService();
+  console.log('log do controller', allUser);
+  jwt.sign({ data: { userId: allUser.map((user) => user.id) } }, secret, jwtConfig);
+
+  return res.status(200).json(allUser);
 }
 
 module.exports = {
-  createUserController,
+  createUserController, getAllUserController,
 };
