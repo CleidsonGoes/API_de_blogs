@@ -8,7 +8,7 @@ const categoryRouter = Router();
 
 // // requisito 03
 categoryRouter.post('/categories', /* validateJWT , */ categoryController.createCategoryController);
-// categoryRouter.get('/user/:id', userController.getIdUserController);
+categoryRouter.get('/categories', categoryController.getAllCategoryController);
 // categoryRouter.post('/user', userController.createUserController);
 
 module.exports = categoryRouter;

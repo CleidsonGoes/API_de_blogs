@@ -16,6 +16,15 @@ async function createCategoryService(nameCategory) {
   //     console.log(user.displayName); // This will certainly be 'Technical Lead JavaScript'
 }
 
+async function getAllCategoryService() {
+  const allCategory = await Category.findAll();
+  const categories = allCategory.map((category) => ({
+    id: category.dataValues.id,
+    name: category.dataValues.name,
+  }));
+  return categories;
+}
+
 module.exports = {
-  createCategoryService,
+  createCategoryService, getAllCategoryService,
 };
