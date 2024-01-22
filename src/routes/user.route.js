@@ -3,12 +3,13 @@ const { Router } = require('express');
 
 // // const authMiddleware = require('../middlewares/auth.middlewares');
 const userController = require('../controllers/user.controller');
+const validationFields = require('../middlewares/validationCreate');
 
 const userRouter = Router();
 
 // // requisito 03
 userRouter.get('/user', /* validateJWT , */ userController.getAllUserController);
 userRouter.get('/user/:id', userController.getIdUserController);
-userRouter.post('/user', userController.createUserController);
+userRouter.post('/user', validationFields, userController.createUserController);
 
 module.exports = userRouter;

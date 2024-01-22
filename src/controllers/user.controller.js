@@ -1,31 +1,14 @@
 const jwt = require('jsonwebtoken');
+const { userCreateService } = require('../services/user.service');
 
 const secret = process.env.JWT_SECRET || 'seusecretdetoken';
 
 const { getAllUserService, getIdUserService } = require('../services/user.service');
 
-function validationFields(displayName, email, password) {
-  const regexEmail = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-  if (displayName.length < 8) {
-    return { status: 400,
-      message: { message: '"displayName" length must be at least 8 characters long' } }; 
-  }
-  if (password.length < 6) {
-    return { status: 400,
-      message: { message: '"password" length must be at least 6 characters long' } };
-  }
-  if (!regexEmail.test(email)) {
-    return { status: 400, message: { message: '"email" must be a valid email' } };
-  }
-  return { status: 201, message: { message: 'tudo certo' } };
-}
-
 async function createUserController(req, res) {
   const { displayName, email, password } = req.body;
-
-  const validation = await validationFields(displayName, email, password);
-  return res.status(validation.status).json(validation.message);
-  // const returnUserService = await userCreateService(email);
+  const { status, payload } = await userCreateService(displayName, email, password);
+  return res.status(status).json(payload);
 }
 
 // REQUISITO 05

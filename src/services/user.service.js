@@ -1,32 +1,25 @@
-// const jwt = require('jsonwebtoken');
+const jwt = require('jsonwebtoken');
 const { User } = require('../models');
 
-async function userCreateService(displayNameUser, emailUser, _passwordUser) {
-  // const secret = process.env.JWT_SECRET || 'seusecretdetoken';
-  // const jwtConfig = { expiresIn: '7d', algorithm: 'HS256' };
+async function userCreateService(displayNameUser, emailUser, passwordUser) {
+  const secret = process.env.JWT_SECRET || 'seusecretdetoken';
+  const jwtConfig = { expiresIn: '7d', algorithm: 'HS256' };
 
-  // const [user, created] = await User.findOrCreate({
-  //   where: { email: emailUser },
-  //   defaults: {
-  //     displayName: displayNameUser,
-  //     email: emailUser,
-  //     password: passwordUser,
-  //   },
-  // });
-  // console.log(user.email); // 'sdepold'
-  // console.log(user.displayName);
-  // console.log(user.email);
-  // console.log(user.password); // This may or may not be 'Technical Lead JavaScript'
-  // console.log(created); // The boolean indicating whether this instance was just created
-  // if (created) {
-  //   console.log(user.displayName); // This will certainly be 'Technical Lead JavaScript'
-  // }
-  const foundForEmail = await User.findOne({ where: { email: emailUser } });
-  console.log('Olha aquiii', foundForEmail);
-  if (!foundForEmail) {
-    return { status: 409, message: { message: 'usuário cadastrado' } };
+  const [user, isCreate] = await User.findOrCreate({
+    where: { email: emailUser },
+    defaults: {
+      displayName: displayNameUser,
+      email: emailUser,
+      password: passwordUser,
+    },
+  });
+  console.log(user);
+
+  if (isCreate) {
+    const token = jwt.sign({ data: { userId: user.id } }, secret, jwtConfig);
+    return { status: 201, payload: { token } };
   }
-  return { status: 201, message: { message: 'User already registered' } };
+  return { status: 409, payload: { message: 'User already registered' } };
 }
 
 // REQUISITO 05
