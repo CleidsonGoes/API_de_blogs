@@ -11,7 +11,6 @@ async function getAllPostService() {
     ],
     attributes: ['id', 'title', 'content', 'userId', 'published', 'updated'],
   });
-  console.log('log findAll do service >>> ', allPost);
   const blogPosts = allPost.map((post) => post);
   console.log('log MAP do service >>> ', blogPosts);
   return blogPosts;
@@ -29,7 +28,6 @@ async function getPostIdService(id) {
   if (idPost === null) {
     return { status: 404, message: { message: 'Post does not exist' } };
   }
-  console.log('log do findAll req 14 >>> ', idPost);
   return { status: 200, message: idPost.dataValues };
 }
 // REQUISITO 15

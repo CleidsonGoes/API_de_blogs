@@ -25,14 +25,12 @@ async function userCreateService(displayNameUser, emailUser, passwordUser) {
 // REQUISITO 05
 async function getAllUserService() {
   const allUser = await User.findAll();
-  console.log('log do findAll do service >>>>', allUser);
   const users = allUser.map((user) => ({
     id: user.dataValues.id,
     displayName: user.dataValues.displayName,
     email: user.dataValues.email,
     image: user.dataValues.image,
   }));
-  console.log('log do map do service', users);
   return users;
 }
 // REQUISITO 05 para validateJWT.js e para REQUISITO 06

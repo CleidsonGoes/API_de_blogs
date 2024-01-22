@@ -9,7 +9,6 @@ async function createCategoryService(nameCategory) {
     },
   });
   const foundCategory = await Category.findOne({ where: { name: nameCategory } });
-  console.log('log da categoria >>> ', foundCategory.dataValues);
   return foundCategory;
   //   console.log(created); // The boolean indicating whether this instance was just created
   //   if (findOrCreate) {

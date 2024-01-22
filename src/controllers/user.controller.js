@@ -19,7 +19,6 @@ async function getAllUserController(_req, res) {
   };
 
   const allUser = await getAllUserService();
-  console.log('log do controller', allUser);
   jwt.sign({ data: { userId: allUser.map((user) => user.id) } }, secret, jwtConfig);
 
   return res.status(200).json(allUser);
