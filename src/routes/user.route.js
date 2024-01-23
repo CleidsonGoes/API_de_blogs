@@ -13,7 +13,7 @@ userRouter.get(
   validateJWT, 
   userController.getAllUserController,
 );
-userRouter.get('/user/:id', userController.getIdUserController);
+userRouter.get('/user/:id', validateJWT, userController.getIdUserController);
 userRouter.post('/user', validationFields, userController.createUserController);
 
 module.exports = userRouter;
