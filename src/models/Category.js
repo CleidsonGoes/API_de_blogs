@@ -12,6 +12,7 @@ const Category = (sequelize, DataTypes) => {
       },
     }, {
       timestamps: false,
+      tableName: 'categories',
       underscored: true, // quando os dados forem inseridos ou selecionados via model devem estar em camelCase, mas quando as queries forem pra o banco os campos das colunas devem estar em snake_case.
     });
   

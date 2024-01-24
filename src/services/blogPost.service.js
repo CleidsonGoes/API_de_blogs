@@ -2,18 +2,24 @@ const { BlogPost } = require('../models');
 const { User } = require('../models');
 const { Category } = require('../models');
 const { PostCategory } = require('../models');
-// REQUISITO 13
+
 async function getAllPostService() {
   const allPost = await BlogPost.findAll({
     include: [
-      { model: User, as: 'User', attributes: ['id', 'displayName', 'email', 'image'] },
-      { model: Category, through: PostCategory, as: 'Categories', attributes: ['id', 'name'] },
+      { model: User, as: 'user', attributes: ['id', 'displayName', 'email', 'image'] },
+      { model: Category, through: PostCategory, as: 'categories', attributes: ['id', 'name'] },
     ],
     attributes: ['id', 'title', 'content', 'userId', 'published', 'updated'],
   });
-  const blogPosts = allPost.map((post) => post);
-  console.log('log MAP do service >>> ', blogPosts);
-  return blogPosts;
+  const blogPosts = allPost.map((post) => ({ id: post.dataValues }));
+  const posts = blogPosts.map((post) => post.id);
+  const blogs = posts.map((post) => ({
+    ...post,
+    categories: post.categories.map((cate) => ({ id: cate.id,
+      name: cate.name })),
+  }));
+  console.log('log MAP do service >>> ', blogs);
+  return blogs;
 }
 // REQUISITO 14
 async function getPostIdService(id) {
@@ -38,7 +44,6 @@ async function findPost(idBlogPost) {
   });
   return post;
 }
-// REQUISITO 15
 async function putPostIdService(idPost, titlePost, contentPost) {
   const findId = await BlogPost.findByPk(idPost);
   if (findId === null) { return { status: 400, message: 'Post not found' }; }
