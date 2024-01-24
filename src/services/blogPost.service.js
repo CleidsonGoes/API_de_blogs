@@ -32,29 +32,20 @@ async function getPostIdService(idP) {
   return { status: 200, message: idPost.dataValues };
 }
 // REQUISITO 15
-async function findPost(idBlogPost) {
-  const post = await BlogPost.findOne({ where: { id: idBlogPost },
-    include: [{ model: User, as: 'User', attributes: ['id', 'displayName', 'email', 'image'] },
-      { model: Category, through: PostCategory, as: 'Categories', attributes: ['id', 'name'] }],
-  });
-  return post;
-}
+// async function findPost(idBlogPost) {
+//   const post = await BlogPost.findOne({ where: { id: idBlogPost },
+//     include: [{ model: User, as: 'User', attributes: ['id', 'displayName', 'email', 'image'] },
+//       { model: Category, through: PostCategory, as: 'Categories', attributes: ['id', 'name'] }],
+//   });
+//   return post;
+// }
 async function putPostIdService(idPost, titlePost, contentPost) {
+  const blogUpdated = await BlogPost.update({
+    title: titlePost, content: contentPost }, { where: { id: idPost } });
+  console.log('log do update >>> ', blogUpdated);
+  if (!blogUpdated) { return { status: 400, message: 'Post not found' }; }
   const findId = await BlogPost.findByPk(idPost);
-  if (findId === null) { return { status: 400, message: 'Post not found' }; }
-  await BlogPost.update({ title: titlePost, content: contentPost }, { where: { id: idPost } });
-  const post = await findPost(idPost);
-  const result = { id: post.id,
-    title: post.title,
-    content: post.content,
-    userId: post.userId,
-    published: post.published,
-    updated: post.updated,
-    user: { id: post.User.id,
-      displayName: post.User.displayName,
-      email: post.User.email,
-      image: post.User.image },
-    categories: post.Categories.map((categ) => ({ id: categ.id, name: categ.name })) };
-  return { status: 200, message: result };
+  console.log('log findByPk >>>', findId);
+  return { status: 200, message: findId };
 }
 module.exports = { getAllPostService, getPostIdService, putPostIdService };
