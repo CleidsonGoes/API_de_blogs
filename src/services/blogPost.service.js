@@ -14,11 +14,8 @@ async function getAllPostService() {
   const blogPosts = allPost.map((post) => ({ id: post.dataValues }));
   const posts = blogPosts.map((post) => post.id);
   const blogs = posts.map((post) => ({
-    ...post,
-    categories: post.categories.map((cate) => ({ id: cate.id,
-      name: cate.name })),
+    ...post, categories: post.categories.map((cate) => ({ id: cate.id, name: cate.name })),
   }));
-  console.log('log MAP do service >>> ', blogs);
   return blogs;
 }
 // REQUISITO 14
