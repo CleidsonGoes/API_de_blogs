@@ -1,7 +1,4 @@
-const { BlogPost } = require('../models');
-const { User } = require('../models');
-const { Category } = require('../models');
-const { PostCategory } = require('../models');
+const { BlogPost, User, Category, PostCategory } = require('../models');
 
 async function getAllPostService() {
   const allPost = await BlogPost.findAll({
@@ -19,18 +16,19 @@ async function getAllPostService() {
   return blogs;
 }
 // REQUISITO 14
-async function getPostIdService(id) {
-  const idPost = await BlogPost.findAll({
+async function getPostIdService(idP) {
+  const idPost = await BlogPost.findOne({ where: { id: idP },
     include: [
-      { model: User, as: 'User', attributes: ['id', 'displayName', 'email', 'image'] },
-      { model: Category, through: PostCategory, as: 'Categories', attributes: ['id', 'name'] },
+      { model: User, as: 'user', attributes: ['id', 'displayName', 'email', 'image'] },
+      { model: Category, through: PostCategory, as: 'categories', attributes: ['id', 'name'] },
     ],
-    attributes: [id, 'title', 'content', 'userId', 'published', 'updated'],
+    attributes: ['id', 'title', 'content', 'userId', 'published', 'updated'],
   });
-
   if (idPost === null) {
     return { status: 404, message: { message: 'Post does not exist' } };
   }
+  console.log('log do req14 id do post', idPost.dataValues);
+  console.log('log do idPost.dataValues >>> ', idPost.dataValues);
   return { status: 200, message: idPost.dataValues };
 }
 // REQUISITO 15

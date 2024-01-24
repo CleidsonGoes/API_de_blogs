@@ -8,7 +8,7 @@ const postRouter = Router();
 
 // // requisito 03
 postRouter.get('/post', validateJWT, postController.getAllPostController);
-postRouter.get('/post/:id', /* validateJWT , */ postController.getPostIdController);
+postRouter.get('/post/:id', validateJWT, postController.getPostIdController);
 postRouter.put('/post/:id', /* validateJWT , */ postController.putPostIdController);
 // categoryRouter.post('/categories', categoryController.getAllCategoryController);
 // categoryRouter.post('/user', userController.createUserController);

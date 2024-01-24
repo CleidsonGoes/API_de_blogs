@@ -35,8 +35,7 @@ module.exports = async (req, res, next) => {
       }
     */
     const user = await getIdUserService(decoded.data.userId);
-    console.log('log do user decoded', user);
-
+    
     if (!user) {
       return res.status(401).json({ message: 'Erro ao procurar usuário do token.' });
     }
