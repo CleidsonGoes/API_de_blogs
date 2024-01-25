@@ -30,17 +30,6 @@ async function getPostIdService(idP) {
   return { status: 200, message: idPost.dataValues };
 }
 // REQUISITO 15
-async function putPostIdService(idPost, reqBody) {
-  const [updated] = await BlogPost.update(reqBody, {
-    where: { id: idPost },
-  });
-  if (!updated) {
-    return 'no update';
-  }
-  console.log('log do updated do service>>>', updated);
-  return updated; 
-} 
-
 async function findPostUpdated(idPost) {
   const result = await BlogPost.findOne({ where: { id: idPost },
     include: [
@@ -52,4 +41,20 @@ async function findPostUpdated(idPost) {
   console.log('Post not found');
 }
 
+async function putPostIdService(idPost, reqBody, user) {
+  const existPost = await BlogPost.findOne({ where: { id: idPost } });
+  if (existPost.dataValues.id !== user) {
+    return { status: 401, message: { message: 'Unauthorized user' } };
+  }
+  await BlogPost.update(reqBody, {
+    where: { id: idPost },
+  });
+  const postUpdated = await BlogPost.findOne({ where: { id: idPost },
+    include: [
+      { model: User, as: 'user', attributes: ['id', 'displayName', 'email', 'image'] },
+      { model: Category, through: PostCategory, as: 'categories', attributes: ['id', 'name'] },
+    ],
+  });
+  return { status: 200, message: postUpdated };
+} 
 module.exports = { getAllPostService, getPostIdService, findPostUpdated, putPostIdService };

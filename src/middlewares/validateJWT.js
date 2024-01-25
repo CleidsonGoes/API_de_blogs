@@ -35,7 +35,7 @@ module.exports = async (req, res, next) => {
       }
     */
     const user = await getIdUserService(decoded.data.userId);
-    
+    req.user = user.message.id; // Chave criada para requisição com id do usuário criador do post, e assim comparar com outros IDs para evitar que além do criador alterem o post já criado
     if (!user) {
       return res.status(401).json({ message: 'Erro ao procurar usuário do token.' });
     }

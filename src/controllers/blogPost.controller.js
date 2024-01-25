@@ -1,5 +1,5 @@
 const { getAllPostService, getPostIdService,
-  findPostUpdated, putPostIdService } = require('../services/blogPost.service');
+  putPostIdService } = require('../services/blogPost.service');
 
 // REQUISITO 13
 async function getAllPostController(_req, res) {
@@ -16,12 +16,12 @@ async function getPostIdController(req, res) {
 
 async function putPostIdController(req, res) {
   const { id } = req.params;
+  const { user } = req;
   const { title, content } = req.body;
   if (!title || !content) {
     return res.status(400).json({ message: 'Some required fields are missing' });
   }
-  await putPostIdService(id, req.body);
-  const postId = await findPostUpdated(id);
+  const postId = await putPostIdService(id, req.body, user);
   return res.status(postId.status).json(postId.message);
 }
 
