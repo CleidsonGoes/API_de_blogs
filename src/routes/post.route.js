@@ -10,7 +10,7 @@ const postRouter = Router();
 postRouter.get('/post', validateJWT, postController.getAllPostController);
 postRouter.get('/post/:id', validateJWT, postController.getPostIdController);
 postRouter.put('/post/:id', validateJWT, postController.putPostIdController);
-// categoryRouter.post('/categories', categoryController.getAllCategoryController);
+// postRouter.post('/post', validateJWT, postController.addPostController);
 // categoryRouter.post('/user', userController.createUserController);
 
 module.exports = postRouter;
