@@ -1,6 +1,7 @@
 const { getAllPostService, getPostIdService,
   putPostIdService } = require('../services/blogPost.service');
 const { addPostService, deletePostService } = require('../services/blogPost2.service');
+const { searchTermPostService } = require('../services/blogPost3.service');
 
 // REQUISITO 13
 async function getAllPostController(_req, res) {
@@ -39,10 +40,19 @@ async function deletePostController(req, res) {
   return res.status(post.status).json(post.message);
 }
 
+const searchTermPostController = async (req, res) => {
+  const searchTerm = req.query.q;
+  // console.log('log do searchTerm >>>', searchTerm);
+  const localizeProduct = await searchTermPostService(searchTerm);
+  const { status, message } = localizeProduct;
+  return res.status(status).json(message);
+};
+
 module.exports = {
   getAllPostController,
   getPostIdController,
   putPostIdController,
   addPostController,
   deletePostController,
+  searchTermPostController,
 };
