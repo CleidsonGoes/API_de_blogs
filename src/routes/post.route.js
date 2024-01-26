@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const validateJWT = require('../middlewares/validateJWT');
 
-// // const authMiddleware = require('../middlewares/auth.middlewares');
+const validationField = require('../middlewares/validationPostCreate');
 const postController = require('../controllers/blogPost.controller');
 
 const postRouter = Router();
@@ -10,7 +10,7 @@ const postRouter = Router();
 postRouter.get('/post', validateJWT, postController.getAllPostController);
 postRouter.get('/post/:id', validateJWT, postController.getPostIdController);
 postRouter.put('/post/:id', validateJWT, postController.putPostIdController);
-// postRouter.post('/post', validateJWT, postController.addPostController);
+postRouter.post('/post', validateJWT, validationField, postController.addPostController);
 // categoryRouter.post('/user', userController.createUserController);
 
 module.exports = postRouter;

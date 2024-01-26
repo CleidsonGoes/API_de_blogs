@@ -12,7 +12,6 @@ const blogPost = (sequelize, DataTypes) => {
     },
     content: {
       allowNull: false,
-      unique: true,
       type: DataTypes.STRING,
     },
     published: {

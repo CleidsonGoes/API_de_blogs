@@ -1,5 +1,6 @@
 const { getAllPostService, getPostIdService,
   putPostIdService } = require('../services/blogPost.service');
+const { addPostService } = require('../services/blogPost2.service');
 
 // REQUISITO 13
 async function getAllPostController(_req, res) {
@@ -25,6 +26,12 @@ async function putPostIdController(req, res) {
   return res.status(postId.status).json(postId.message);
 }
 
+async function addPostController(req, res) {
+  const { user } = req;
+  const postAdd = await addPostService(req.body, user);
+  return res.status(postAdd.status).json(postAdd.message);
+}
+
 module.exports = {
-  getAllPostController, getPostIdController, putPostIdController,
+  getAllPostController, getPostIdController, putPostIdController, addPostController,
 };
