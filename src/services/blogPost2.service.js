@@ -21,7 +21,7 @@ const findNewPost = async (id, t) => BlogPost.findOne({
 async function addPostService(requestData, idUser) {
   const { title, content } = requestData;
   const findAllIds = (await Promise.all(requestData.categoryIds
-    .map((id) => Category.findOne({ where: { id } }))));
+    .map((id) => Category.findOne({ where: { id } })))); // caso false retorna NULL no indice não criado
 
   const existIds = findAllIds.every((data) => data);
   if (!existIds) {
@@ -40,4 +40,20 @@ async function addPostService(requestData, idUser) {
   return { status: 201, message: transactions };
 }
 
-module.exports = { addPostService };
+async function deletePostService(idPost, idUser) {
+  const idPostFound = await BlogPost.findByPk(idPost);
+  
+  if (!idPostFound) {
+    return { status: 404, message: { message: 'Post does not exist' } };
+  }
+  const { dataValues: { userId } } = idPostFound;
+  if (userId !== idUser) {
+    return { status: 401, message: { message: 'Unauthorized user' } };
+  }
+  await BlogPost.destroy({ // deve retornar o número de info. deletada
+    where: { id: idPost },
+  });
+  return { status: 204, message: '' };
+}
+
+module.exports = { addPostService, deletePostService };

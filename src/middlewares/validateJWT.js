@@ -14,8 +14,7 @@ module.exports = async (req, res, next) => {
   const bearerToken = req.header('Authorization');
 
   if (!bearerToken) {
-    return res.status(401).json({
-      message: 'Token not found',
+    return res.status(401).json({ message: 'Token not found',
     });
   }
 
@@ -35,7 +34,8 @@ module.exports = async (req, res, next) => {
       }
     */
     const user = await getIdUserService(decoded.data.userId);
-    req.user = user.message.id; // Chave criada para requisição com id do usuário criador do post, e assim comparar com outros IDs para evitar que além do criador alterem o post já criado
+    // console.log('log user', user);
+    req.user = user.message.id; // Chave "req.user" criada para requisição com id do usuário criador do post, e assim comparar com outros IDs para evitar que além do criador alterem o post já criado
     if (!user) {
       return res.status(401).json({ message: 'Erro ao procurar usuário do token.' });
     }

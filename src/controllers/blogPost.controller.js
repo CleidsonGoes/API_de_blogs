@@ -1,6 +1,6 @@
 const { getAllPostService, getPostIdService,
   putPostIdService } = require('../services/blogPost.service');
-const { addPostService } = require('../services/blogPost2.service');
+const { addPostService, deletePostService } = require('../services/blogPost2.service');
 
 // REQUISITO 13
 async function getAllPostController(_req, res) {
@@ -32,6 +32,17 @@ async function addPostController(req, res) {
   return res.status(postAdd.status).json(postAdd.message);
 }
 
+async function deletePostController(req, res) {
+  const { id } = req.params;
+  const { user } = req;
+  const post = await deletePostService(id, user);
+  return res.status(post.status).json(post.message);
+}
+
 module.exports = {
-  getAllPostController, getPostIdController, putPostIdController, addPostController,
+  getAllPostController,
+  getPostIdController,
+  putPostIdController,
+  addPostController,
+  deletePostController,
 };

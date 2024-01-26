@@ -11,6 +11,6 @@ postRouter.get('/post', validateJWT, postController.getAllPostController);
 postRouter.get('/post/:id', validateJWT, postController.getPostIdController);
 postRouter.put('/post/:id', validateJWT, postController.putPostIdController);
 postRouter.post('/post', validateJWT, validationField, postController.addPostController);
-// categoryRouter.post('/user', userController.createUserController);
+postRouter.delete('/post/:id', validateJWT, postController.deletePostController);
 
 module.exports = postRouter;
