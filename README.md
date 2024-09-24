@@ -14,3 +14,18 @@ cd Project_API_de_blogs
 # Instale as dependências
 npm install
 
+## Uso
+
+# Rode o projeto
+npm start
+
+## Contribuição
+
+
+## Licença
+
+## Funcionalidades
+
+## Screenshots
+
+## Tecnologias Utilizadas
